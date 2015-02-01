@@ -1,45 +1,15 @@
 # rock/paper/scissors 
-# Trying to add Player class (to record games won/games played) 
-# and Game class to play the game.
-# Eventually start_game could morph into driver??
-# not fully functional
+#require 'pry'
+#require_relative 'driver.rb'
+#require_relative 'player.rb'
 
-# require_relative 'driver.rb'
-require 'pry'
-
-# class Array
-#   def random_element
-#     self[rand(length)]
-#   end
-# end
 #--------------------------------------------------
-class Player
-  attr_accessor :move, :players, :scores, :games_won, :games_played
-  attr_writer :name, :players
-  def initialize(name)
-    @name = name
-    @players = Array.new
-    @players << name
-    @scores = Hash.new
-    @games_won = 0
-    @games_played = 0
-    @players.each {|name| @scores[name] = [0, 0]}
-  end
-  def name
-    @name
-  end
-  def scores
-    @scores
-  end
-end
-#--------------------------------------------------
+# module Games
 class Game
-  attr_accessor :player_1, :player_2, :moves, :current_moves
+  attr_accessor :player_1, :player_2, :moves, :current_moves, :winner, :current_player
   def initialize(player_1, player_2)
     @moves = ["Rock", "Paper", "Scissors"]
     @player_1, @player_2 = player_1, player_2
-    Player.new(player_1) #technically this should be checking for them in the hash before adding them...
-    Player.new(player_2)
     @current_player = player_1
     @current_moves = Array.new
     @winner = ''
@@ -47,13 +17,13 @@ class Game
   end
 
   def start_game    #this might be the driver in a way??
-    puts "Starting rock-paper-scissors..."
-    puts
+    # puts "Starting rock-paper-scissors..."
+    # puts
     # until @current_moves.length == 2
     ask_player_for_move(@current_player)
     # end
     determine_winner
-    puts "Game Over"
+    # puts "Game Over"
   end
   
   def ask_player_for_move(current_player)
@@ -81,9 +51,6 @@ class Game
     until @current_moves.length == 2
     ask_player_for_move(@current_player)
     end
-    # until @current_moves.length == 2
-    #   ask_player_for_move(@current_player)
-    # end
   end
   
   def determine_winner
@@ -106,20 +73,10 @@ class Game
         @winner = player_2
         @loser = player_1
     	end
+      return @winner    #I actually need to return @winner and @loser
       puts @winner
-      add_to_scores
-  end
-
-  def add_to_scores
-    if @winner == player_1
-      @games_won += 1
-      @games_played += 1
-      @scores[player_1] = [@games_won, @games_played]
-    else 
-      @games_won = @games_won
-      @games_played += 1
-      @scores[player_2] = [@games_won, @games_played]
+      # add_to_scores
   end
 end
-end
-binding.pry
+# end
+#binding.pry
